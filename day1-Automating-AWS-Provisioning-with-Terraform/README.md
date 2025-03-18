@@ -69,6 +69,7 @@ This guide documents my learning journey from Day 1 of the MultiCloud DevOps & A
 ![EC2Admin Role](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/3763515fcb0135832b1e5a85f51c279c616d4e80/Screenshots/EC2Admin%20Role%20in%20IAM.png)
 ![EC2 Instance Security Group](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/3763515fcb0135832b1e5a85f51c279c616d4e80/Screenshots/EC2%20Security%20Group.png)
 ![EC2 Instance](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/3763515fcb0135832b1e5a85f51c279c616d4e80/Screenshots/EC2%20Instance.png)
+![EC2 Instance Successful connection](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/01e0ec19bfac2ac8e9b4144bd5dfa005ec48b19b/Screenshots/Succesful%20connection%20to%20EC2%20instance.png)
 
 ---
 
