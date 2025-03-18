@@ -225,7 +225,7 @@ Next Steps:
 - Automate deployments using CI/CD pipelines.
 - Extend AI-driven automation for DevOps tasks.
 
-![EC2 Instance Dashboard]()
+![EC2 Instance Dashboard](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/651096c47cfb3c52b428c9d71dcc1735be467c51/Screenshots/EC2%20Instance%20Dashboard.png)
 ![DynamoDB tables](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/3763515fcb0135832b1e5a85f51c279c616d4e80/Screenshots/DynamoDB%20Tables.png)
 
 
