@@ -1,8 +1,208 @@
-# MultiCloud, DevOps & AI Challenge - Day 3: CI/CD Pipeline for CloudMart
+# MultiCloud, DevOps & AI Challenge - Day 3: Putting CloudApp on Autopilot with DevOps CI/CD pipeline
 
 This document outlines the steps taken to configure and test a CI/CD pipeline for the CloudMart application using AWS CodePipeline and CodeBuild.
 
-## Part 1: CI/CD Pipeline Configuration
+## Restarting Resources from Day 2
+
+To avoid unnecessary costs, the cluster and other resources were deleted after Day 2 ended. They were then recreated at the beginning of Day 3 using the following commands:
+
+### Create Kubernetes Cluster
+
+```bash
+eksctl create cluster \
+  --name cloudmart \
+  --region us-east-1 \
+  --nodegroup-name standard-workers \
+  --node-type t3.medium \
+  --nodes 1 \
+  --with-oidc \
+  --managed
+```
+
+### Connect to the EKS cluster:
+
+```bash
+aws eks update-kubeconfig --name cloudmart
+```
+
+### Verify cluster connectivity:
+
+```bash
+kubectl get svc
+kubectl get nodes
+```
+
+### Create a service account to provide access to AWS services:
+
+```bash
+eksctl create iamserviceaccount \
+  --cluster=cloudmart \
+  --name=cloudmart-pod-execution-role \
+  --role-name CloudMartPodExecutionRole \
+  --attach-policy-arn=arn:aws:iam::aws:policy/AdministratorAccess\
+  --region us-east-1 \
+  --approve
+```
+
+### Switch to backend folder
+
+```bash
+cd ../..
+cd challenge-day2/backend
+```
+
+### Follow the ECR steps to build your Docker image
+
+### Create a Kubernetes deployment file (YAML) for the Backend
+
+```bash
+
+cd ../..
+cd challenge-day2/backend
+nano cloudmart-backend.yaml
+```
+
+### Content of clodmart-frontend.yaml file
+
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudmart-backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudmart-backend-app
+  template:
+    metadata:
+      labels:
+        app: cloudmart-backend-app
+    spec:
+      serviceAccountName: cloudmart-pod-execution-role
+      containers:
+      - name: cloudmart-backend-app
+        image: public.ecr.aws/l4c0j8h9/cloudmart-backend:latest
+        env:
+        - name: PORT
+          value: "5000"
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: BEDROCK_AGENT_ID
+          value: "xxxxxx"
+        - name: BEDROCK_AGENT_ALIAS_ID
+          value: "xxxx"
+        - name: OPENAI_API_KEY
+          value: "xxxxxx"
+        - name: OPENAI_ASSISTANT_ID
+          value: "xxxx"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudmart-backend-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: cloudmart-backend-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+```
+
+### Deploy the Backend on Kubernetes
+
+```bash
+kubectl apply -f cloudmart-backend.yaml
+```
+
+Monitor the status of objects being created and obtain the public IP generated for the API
+
+```bash
+kubectl get pods
+kubectl get deployment
+kubectl get service
+```
+
+### Frontend Deployment on Kubernetes
+
+#### Preparation
+
+Change the Frontend's .env file to point to the API URL created within Kubernetes obtained by the kubectl get service command
+
+```bash
+cd ../challenge-day2/frontend
+nano .env
+```
+​
+Content of .env:
+
+```bash
+VITE_API_BASE_URL=http://<your_url_kubernetes_api>:5000/api
+```
+
+### Follow the ECR steps to build your Docker image
+
+### Create a Kubernetes deployment file (YAML) for the Frontend
+
+```bash
+nano cloudmart-frontend.yaml
+```
+​
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudmart-frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudmart-frontend-app
+  template:
+    metadata:
+      labels:
+        app: cloudmart-frontend-app
+    spec:
+      serviceAccountName: cloudmart-pod-execution-role
+      containers:
+      - name: cloudmart-frontend-app
+        image: public.ecr.aws/l4c0j8h9/cloudmart-frontend:latest
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudmart-frontend-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: cloudmart-frontend-app
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+```
+
+
+### Deploy the Frontend on Kubernetes
+
+```bash
+kubectl apply -f cloudmart-frontend.yaml
+```
+​
+### Monitor the status of objects being created and obtain the public IP generated for the API
+
+```bash
+kubectl get pods
+kubectl get deployment
+kubectl get service
+```
+
+
+## Part 2: CI/CD Pipeline Configuration
 
 ### Step 1: Create GitHub Repository
 
@@ -19,7 +219,9 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
     git commit -m "app sent to repo"
     git push
     ```
-    **(Screenshot: Successful push to GitHub repository)**
+    ![Local Git Repository setup](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Local%20Git%20Repository%20setup.png)
+    ![Remote Git Repository setup](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Remote%20Git%20Repository%20Setup.png)
+    ![App code added to Remote Repository](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/App%20code%20added%20to%20Remote%20Repository.png)
 
 ### Step 2: Configure AWS CodePipeline
 
@@ -31,7 +233,10 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
 6.  **Important:** Use GitHub OAuth instead of GitHub v1 and select the appropriate repo and branch.
 7.  Add the `cloudmartBuild` project as the build stage.
 8.  Add the `cloudmartDeploy` project as the deployment stage.
-    **(Screenshot: AWS CodePipeline configuration)**
+   
+   ![Create Pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Create%20Pipeline.png)
+   ![Pipeline settings](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Pipeline%20setting%20p1.png)
+   ![Adding source in the pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Adding%20source%20in%20the%20pipeline.png)
 
 ### Step 3: Configure AWS CodeBuild to Build the Docker Image
 
@@ -83,8 +288,12 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
         * Access IAM console > Roles.
         * Find role created for CodeBuild (`cloudmartBuild`).
         * Add permission: `AmazonElasticContainerRegistryPublicFullAccess`.
-    **(Screenshot: AWS CodeBuild configuration for build stage)**
-    **(Screenshot: IAM role with added ECR permissions)**
+    
+    ![Codebuild settings p1](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Codebuild%20settings%20p1.png)
+    ![CodeBuild settings p2](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/CodeBuild%20settings%20p2.png)
+    ![Buildspec file](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Buildspec%20file.png)
+    ![codebuild project created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/codebuild%20project%20created.png)
+    ![Intermediate pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Created%20Pipeline.png)
 
 ### Step 4: Configure AWS CodeBuild for Application Deployment
 
@@ -124,10 +333,12 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
             git commit -m "replaced image uri with CONTAINER_IMAGE"
             git push
             ```
-    **(Screenshot: AWS CodeBuild configuration for deployment stage)**
-    **(Screenshot: Updated cloudmart-frontend.yaml in GitHub)**
+    ![Amazon ECR Policy added to cloudmart build service role](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Amazon%20ECR%20Policy%20added%20to%20cloudmart%20build%20service%20role.png)
+    ![Pipeline run succeded after policy change](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Pipeline%20run%20succeded%20after%20policy%20change.png)
+    ![Adding new stage Deploy in Pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Added%20new%20stage%20Deploy.png)
+    ![Deploy Stage added](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Deploy%20Stage%20added.png)
 
-## Part 2: Test Your CI/CD Pipeline
+## Part 3: Test Your CI/CD Pipeline
 
 ### Step 1: Make a Change on GitHub
 
@@ -139,14 +350,16 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
     git commit -m "changed to Featured Products on CloudMart"
     git push
     ```
-    **(Screenshot: Updated index.jsx file in GitHub)**
+    ![Change made in source code](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Change%20made%20in%20source%20code.png)
+    ![Changed pushed to remote repo](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Changed%20pushed%20to%20remote%20repo.png)
 
 ### Step 2: Observe the Pipeline Execution
 
 1.  Watch CodePipeline automatically trigger the build.
 2.  After the build completes, the deployment phase should begin.
-    **(Screenshot: AWS CodePipeline execution in progress)**
-    **(Screenshot: AWS CodePipeline successful execution)**
+ 
+    ![Git push triggered the CICD pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Git%20push%20triggered%20the%20CICD%20pipeline.png)
+    ![Succesful execution of automated CICD pipeline](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Succesful%20execution%20of%20automated%20CICD%20pipeline.png)
 
 ### Step 3: Verify the Deployment
 
@@ -156,60 +369,16 @@ This document outlines the steps taken to configure and test a CI/CD pipeline fo
     kubectl get deployment
     kubectl get service
     ```
-    **(Screenshot: kubectl get pods, deployment, service output)**
 2.  Access the CloudMart application in a browser to verify the changes.
-    **(Screenshot: Updated CloudMart application in browser)**
+    
+    ![Website updates after CICD run](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day3/Website%20updates%20after%20CICD%20run.png)
 
 ## Notes
 
-1.  To avoid unnecessary costs, the cluster and other resources were deleted after Day 2. They were recreated using the following commands:
-    ```bash
-    eksctl create cluster \
-      --name cloudmart \
-      --region us-east-1 \
-      --nodegroup-name standard-workers \
-      --node-type t3.medium \
-      --nodes 1 \
-      --with-oidc \
-      --managed
-
-    aws eks update-kubeconfig --name cloudmart
-
-    kubectl get svc
-    kubectl get nodes
-
-    eksctl create iamserviceaccount \
-      --cluster=cloudmart \
-      --name=cloudmart-pod-execution-role \
-      --role-name CloudMartPodExecutionRole \
-      --attach-policy-arn=arn:aws:iam::aws:policy/AdministratorAccess \
-      --region us-east-1 \
-      --approve
-    ```
+1.  To avoid unnecessary costs, the cluster and other resources were deleted after Day 2. They were recreated:
 2.  Remember to replace placeholder values with your actual AWS credentials and resource IDs.
 3.  In a production environment, use IAM roles instead of direct credentials for CodeBuild deployment.
 4.  Admin privileges were used for educational purposes; follow the principle of least privilege in production.
-5.  Backend deployment was required before running this code. The commands used are as follows:
+5.  Kubenetes clusterm,Frontend and Backend deployment was required before running this code.
+6.  Verify the application is accessible at `http://<frontend_url>:5001/` after the pipeline succeeds.
 
-    ```bash
-    cd ../..
-    cd challenge-day2/backend
-    kubectl apply -f cloudmart-backend.yaml
-    kubectl get pods
-    kubectl get deployment
-    kubectl get service
-    ```
-6.  Frontend deployment was required before running this code. The commands used are as follows:
-
-    ```bash
-    cd ../challenge-day2/frontend
-    nano .env
-    #Update .env with backend url
-    kubectl apply -f cloudmart-frontend.yaml
-    kubectl get pods
-    kubectl get deployment
-    kubectl get service
-    ```
-7.  Verify the application is accessible at `http://<frontend_url>:5001/` after the pipeline succeeds.
-**(Screenshot: CloudMart application at http://<frontend_url>:5001/)**
-**(Screenshot: CloudMart admin panel at http://<frontend_url>:5001/admin)**
