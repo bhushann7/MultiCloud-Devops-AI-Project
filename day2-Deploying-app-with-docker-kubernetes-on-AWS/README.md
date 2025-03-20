@@ -343,7 +343,7 @@ This document outlines the steps taken to deploy the CloudMart application using
 7.  **Access the application:**
     * Open `http://<your_frontend_service_ip>:5001/` in a web browser.
     
-    ![website deployed successfully](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day2/Succesfully%20deployed%20the%20website%20.png)
+    ![website deployed successfully](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day2/Succesfully%20deployed%20the%20website%20.jpeg)
 
     * Admin panel: `http://<your_frontend_service_ip>:5001/admin`
     
