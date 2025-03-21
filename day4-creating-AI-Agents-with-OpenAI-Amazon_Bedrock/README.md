@@ -113,11 +113,18 @@ This section details the steps to create and configure the Amazon Bedrock Agent 
 -   Select Claude 3 Sonnet and modify access to enable it.
 -   Wait for the access to be granted.
 
+![Amazon Bedrock Model Catalog](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Amazon%20Bedrock%20Model%20Catalog.png)
+![Request to Access granted]()
+
 ### Creating the Agent:
 
 -   Create a new agent named "cloudmart-product-recommendation-agent".
 -   Select Claude 3 Sonnet as the base model.
 -   Provide the agent instructions for product recommendations.
+
+![Create Agent](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Create%20Agent.png)
+![Selecting model for agent](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Selecting%20model%20for%20agent.png)
+![Agent created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Agent%20Created.png)
 
 ### Agent Instructions:
 ```bash
@@ -176,12 +183,15 @@ Remember, your primary goal is to help users find the best products for their ne
   ]
 }
 ```
+![Update Policy for Agent IAM role]()
+
 ### Configuring the Action Group:
 
 -   Create an action group named "Get-Product-Recommendations".
 -    Set the action group type as "Define with API schemas".
 - Select the Lambda function "cloudmart-list-products" as the action group executor.
 -   Define the API schema using the inline schema editor.
+
 
 ### OpenAPI Schema:
 
@@ -264,6 +274,11 @@ Remember, your primary goal is to help users find the best products for their ne
 }
 ```
 
+
+![Create Action Group](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Create%20Action%20Group.png)
+![Action Group Created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Action%20Group%20Created.png)
+
+
 ### Review and Create:
 
 -   Review all configurations and prepare the agent.
@@ -272,11 +287,12 @@ Remember, your primary goal is to help users find the best products for their ne
 
 -   Test the agent using the "Test Agent" panel.
 -   Verify if the agent asks relevant questions and provides accurate product recommendations.
--   [Screenshot opportunity: Add a screenshot of the Bedrock Agent test panel showing a successful interaction.]
 
 ### Creating an Alias:
 
 -   Create an alias named "cloudmart-prod" for the agent.
+
+![Alias created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Alias%20Created.png)
 
 ## 3. OpenAI Assistant Configuration
 
@@ -291,6 +307,8 @@ This section covers the setup of the OpenAI gpt-4o assistant for customer suppor
 
 -   Create a new assistant named "CloudMart Customer Support".
 -   Select gpt-4o as the model.
+
+![OpenAI assistant created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/OpenAI%20assistant%20created.png)
 
 ### Configuring the Assistant:
 
@@ -308,6 +326,8 @@ You are a customer support agent for CloudMart, an e-commerce platform. Your rol
 
 - The assistant auto-saves
 -   Note down the Assistant ID.
+
+![Testing the AI agent](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Testing%20the%20AI%20agent.png)
 
 ### Generating API Key:
 
@@ -376,15 +396,23 @@ spec:
 kubectl apply -f cloudmart-backend.yaml
 ```
 
+![Updated Bedrock and OpenAI keys in Kubernetes](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Updated%20Bedrock%20and%20OpenAI%20keys%20in%20kubenetes%20deployment%20file.png)
+
 ## 5. Testing the AI Assistants
 After redeploying the backend, we tested both the AI Chatbot and the AI Assistant.
+
 
 ### AI Chatbot (Amazon Bedrock Agent):
 
 - We interacted with the chatbot to request product recommendations.
 - Verified that the chatbot asked relevant questions and provided accurate product suggestions based on the API data.
 - [Screenshot opportunity: Add a screenshot of the AI Chatbot interaction showing a successful product recommendation.]
-AI
+
+![AI Assistant chatbot working](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/AI%20Assistant%20chatbot%20working.png)
+![Engaging with chatbot](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Engaging%20with%20chatbot.png)
+![Chatbot describing the product by taking description from backend](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Chatbot%20describing%20the%20product%20by%20taking%20description%20from%20backend.png)
+![Interaction with chatbot](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Interaction%20with%20chatbot.png)
+![Interaction with chatbot 2](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Interaction%20with%20chatbot%202.png)
 
 ### Assistant (OpenAI gpt-4o):
 
@@ -393,6 +421,9 @@ AI
 - [Screenshot opportunity: Add a screenshot of the AI Assistant interaction showing a successful order cancellation request.]
 - [Screenshot opportunity: Add a screenshot of the order history showing the cancelled order.]
 
+![Order Placed successfully](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Order%20Placed%20successfully.png)
+![Chat with agent to cancel the order](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Chat%20with%20agent%20to%20cancel%20the%20order.png)
+![Order cancelled by customer support bot](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day4/Order%20cancelled%20by%20customer%20support%20bot.png)
 
 ## 6. Learnings and Observations
 ### Amazon Bedrock Agent Configuration:
