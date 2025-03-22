@@ -82,6 +82,8 @@ git push
 -   Navigate to **BigQuery** in the Google Cloud Console.
 -   Create a dataset named `cloudmart`.
 
+![BigQuery Table](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/BigQuery%20table.png)
+
 ### 4. Create a BigQuery Table
 
 -   In the dataset `cloudmart`, create a table named `cloudmart-orders` with the following schema:
@@ -99,6 +101,8 @@ git push
 -   Navigate to **IAM & Admin** > **Service Accounts**.
 -   Create a service account `cloudmart-bigquery-sa` with **BigQuery Data Editor** role.
 -   Generate a JSON key and save it as `google_credentials.json`.
+![BigQuery Service account for lambda](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/BigQuery%20service%20account%20ofr%20lambda.png)
+
 
 ## Step 3: Terraform Setup for BigQuery
 
@@ -118,6 +122,10 @@ nano main.tf
 terraform apply
 ```
 
+![Updated main.tf file](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Updated%20main.tf%20file.png)
+
+![DynamoDB to BigQuery Lambda function](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/DynamoDB%20to%20BigQuery%20Lambda%20function.png)
+
 ## Step 4: Azure Text Analytics Setup
 
 ### 1. Create an Azure Account
@@ -127,6 +135,12 @@ terraform apply
 ### 2. Create a Language Service Resource
 
 -   Search for **Language Service** and create a new resource.
+
+![Azure AI Language Text Analytics](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Azure%20AI%20Language%20Text%20Analytics.png)
+
+![Configure text analytics resource](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Configure%20text%20analytics%20resource.png)
+
+![Azure Text Analytics Setup](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/%20Azure%20Text%20Analytics%20setup.png)
 
 ### 3. Retrieve API Credentials
 
@@ -198,16 +212,43 @@ spec:
 kubectl apply -f cloudmart-backend.yaml
 ```
 
+![New Backend image created](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/New%20Backend%20image%20created.png)
+
+
+### Before going to next steps, added some more products on the website
+
+![Added new products on the website](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Added%20new%20products%20on%20website.png)
+
+
 ## Step 6: Validate Setup
 
 ### BigQuery Backup
 
 -   Place a test order and verify if the data appears in **Google BigQuery**.
 
+![Placing new order](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Placing%20new%20order.png)
+
+![Order Placed](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Order%20Placed.png)
+
+![order registered in DynamoDB](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/order%20registered%20in%20DynamoDb.png)
+
+![Order registered by Lambda into BigQuery](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Order%20registered%20by%20Lambda%20into%20BigQuery.png)
+
 ### Azure Sentiment Analysis
 
 -   Submit a support ticket and check for sentiment analysis results.
 
+![Negative customer support experience](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Negative%20customer%20support%20experience.png)
+
+![Negative sentiment detected by Text Analytics](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Negative%20sentiment%20detected%20by%20Text%20Analytics.png)
+
+![Neutral customer experience](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Neutral%20customer%20experience.png)
+
+![Neutral sentinment detected by Text Analytics](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Neutral%20sentinment%20detected%20by%20Text%20Analytics.png)
+
+![Positive customer support conversation](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Positive%20customer%20support%20conversation.png)
+
+![Positive sentiment detected by Text Analytics.png](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/Positive%20sentiment%20detected%20by%20Text%20Analytics.png)
 
 ## Learnings and Observations
 
