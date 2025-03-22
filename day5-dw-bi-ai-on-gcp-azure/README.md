@@ -82,7 +82,6 @@ git push
 -   Navigate to **BigQuery** in the Google Cloud Console.
 -   Create a dataset named `cloudmart`.
 
-![BigQuery Table](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/BigQuery%20table.png)
 
 ### 4. Create a BigQuery Table
 
@@ -94,6 +93,7 @@ git push
     -   `total: FLOAT`
     -   `userEmail: STRING`
 
+![BigQuery Table](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/Day5/BigQuery%20table.png)
 
 
 ### 5. Create Service Account and Key
