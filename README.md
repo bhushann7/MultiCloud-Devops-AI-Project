@@ -1,42 +1,63 @@
-# Multicloud DevOps & AI Challenge
+# 🚀 MultiCloud, DevOps & AI Challenge
 
-## Context
-CloudMart, an e-commerce company, is facing significant IT efficiency issues and rising costs related to customer support. These challenges have directly impacted the company's competitiveness, which is losing market share to Klarna, a competitor that offers the same products at lower prices.
+## 📌 Overview
+This repository provides a step-by-step guide to deploying a **cloud-native e-commerce platform** with **CI/CD automation, AI-powered customer assistance, and MultiCloud support**. The challenge focuses on leveraging cutting-edge **DevOps and AI** technologies to optimize IT efficiency, reduce operational costs, and enhance business competitiveness.
 
-To solve these problems, CloudMart seeks to implement innovative solutions based on DevOps and Artificial Intelligence (AI) to optimize operations, reduce costs, and increase its competitiveness.
+## 🎯 Business Context
+CloudMart, an e-commerce company, faces significant IT inefficiencies and high customer support costs, impacting its market competitiveness. To address these challenges, we implemented a **DevOps & AI-driven** strategy with the following key goals:
 
-## Challenge: Phase 1
-### Objective
-Identify and propose a strategy for implementing AI assistants that optimize customer support, ensuring cost reduction and maintaining quality of service.
+- **Automate infrastructure provisioning** to improve scalability.
+- **Deploy AI-powered customer assistants** to optimize support operations.
+- **Leverage MultiCloud solutions** to enhance resilience and analytics.
 
-### Problems to Solve
-- High customer support costs.
-- Low operational efficiency.
-- Reduced competitiveness in the market.
+## 🏆 Key Outcomes
+- **90% of customer support queries** handled by AI Assistants.
+- **$2.25 million monthly cost savings** by reducing support staff from 500 to 50.
+- **Enhanced cloud efficiency** with automated CI/CD, Kubernetes, and AI integrations.
 
-### Initial Proposal
-- Use AI assistants to perform most of the customer service.
-- Ensure that assistants are capable of handling at least 90% of interactions.
+## 🛠️ Project Architecture
+The project is structured into five key steps, each focusing on different cloud and DevOps components. Below is a summary of each step with links to the detailed implementation guide.
 
-## Decisions: Phase 2
-### Operational Results
-- AI assistants now handle 90% of customer service.
-- Support staff was reduced from 500 people to 50 supervisors, resulting in the layoff of 450 employees.
+### 🔹 Step 1: **Infrastructure Automation with Terraform**  
+🔗 [Read More](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/day1-Automating-AWS-Provisioning-with-Terraform/README.md)  
+✅ Use **Terraform** to define cloud infrastructure as code.  
+✅ Automate provisioning of **EC2, S3, DynamoDB, and IAM roles**.  
+✅ Ensure **scalability & repeatability** with Infrastructure-as-Code (IaC).
 
-### Financial Impact
-- Monthly payroll was reduced from $2.5 million to $250,000.
-- The company's monthly profit increased by $2.25 million.
+### 🔹 Step 2: **Deploying CloudMart with Docker & Kubernetes**  
+🔗 [Read More](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/day2-Deploying-app-with-docker-kubernetes-on-AWS/README.md)  
+✅ Containerize the CloudMart app using **Docker**.  
+✅ Deploy to **AWS EKS** (Elastic Kubernetes Service) with **auto-scaling**.  
+✅ Implement **load balancing** for high availability.
 
-### Future Challenges
-- Ensure the quality of automated service.
-- Evaluate the organizational impact of layoffs.
-- Expand the solution to other areas of the company.
+### 🔹 Step 3: **CI/CD Pipeline with AWS CodePipeline**  
+🔗 [Read More](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/day3-Putting-CloudApp-on-Autopilot-with-DevOps-CI%3ACD-pipeline/README.md)  
+✅ Set up a **GitHub-integrated CI/CD pipeline**.  
+✅ Automate deployments using **AWS CodePipeline, CodeBuild, and CodeDeploy**.  
+✅ Enable **seamless application updates** with zero downtime.
 
-## Instructions
-Create a detailed plan for implementing the AI-based solution, including:
+### 🔹 Step 4: **AI Assistants with OpenAI & Amazon Bedrock**  
+🔗 [Read More](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/day4-creating-AI-Agents-with-OpenAI-Amazon_Bedrock/README.md)  
+✅ Integrate **OpenAI Assistants & Amazon Bedrock** for AI-powered support.  
+✅ Deploy chatbots via **AWS Lambda & API Gateway**.  
+✅ Automate **customer service and product recommendations**.
 
-- Tools and technologies that will be used.
-- Training and deployment strategy for assistants.
-- Metrics to measure the impact on support and costs.
-- Present proposals to mitigate the negative impacts of layoffs on the organizational environment.
-- Propose ways to expand the use of AI in other operational areas of CloudMart to maximize efficiency and competitiveness gains.
+### 🔹 Step 5: **MultiCloud BI with Google BigQuery & Azure AI**  
+🔗 [Read More](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/day5-dw-bi-ai-on-gcp-azure/README.md)  
+✅ Utilize **Google BigQuery** for **data warehousing & BI**.  
+✅ Integrate **Azure Text Analytics** for **sentiment analysis**.  
+✅ Expand CloudMart’s AI capabilities across multiple cloud providers.
+
+![Architecture Diagram](https://github.com/bhushann7/MultiCloud-Devops-AI-Project/blob/main/Screenshots/diagram-export-3-17-2025-10_53_11-PM.png)
+
+## 🎯 How to Use
+Follow the steps sequentially to deploy a fully functional **cloud-native AI-driven e-commerce solution**. Each phase builds upon the previous one, forming a robust and scalable architecture.
+
+## 🚀 Next Steps
+🔹 Fine-tune AI models for improved automation.  
+🔹 Expand MultiCloud strategies for enterprise applications.  
+🔹 Optimize cloud costs using **FinOps best practices**.  
+
+## 📌 Resources
+📖 **Detailed Write-ups:** [Medium Articles](https://medium.com/@bhushan.bamble)  
+💻 **Code Repository:** [GitHub](https://github.com/bhushann7/MultiCloud-Devops-AI-Project)  
